@@ -1,11 +1,22 @@
-const menu = document.querySelector('.menu');
-const nav = document.querySelector('.nav nav');
-
-menu?.addEventListener('click', () => {
-  const open = nav.classList.toggle('is-open');
-  menu.setAttribute('aria-expanded', String(open));
-});
-
-document.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => nav?.classList.remove('is-open'));
-});
+const COLS=10,ROWS=20;const boardEl=document.querySelector('#board'),nextEl=document.querySelector('#next'),overlay=document.querySelector('#overlay'),scoreEl=document.querySelector('#score'),linesEl=document.querySelector('#lines'),levelEl=document.querySelector('#level');
+const SHAPES={I:[[1,1,1,1]],O:[[1,1],[1,1]],T:[[0,1,0],[1,1,1]],S:[[0,1,1],[1,1,0]],Z:[[1,1,0],[0,1,1]],J:[[1,0,0],[1,1,1]],L:[[0,0,1],[1,1,1]]};
+const TYPES=Object.keys(SHAPES);let grid=[],piece=null,nextType=null,score=0,lines=0,level=1,playing=false,paused=false,timer=null;
+function empty(){return Array.from({length:ROWS},()=>Array(COLS).fill(null))}function clone(a){return a.map(r=>[...r])}function rotate(m){return m[0].map((_,i)=>m.map(r=>r[i]).reverse())}
+function newPiece(type){const shape=clone(SHAPES[type]);return{type,shape,x:Math.floor((COLS-shape[0].length)/2),y:0}}
+function collides(p,dx=0,dy=0,shape=p.shape){for(let y=0;y<shape.length;y++)for(let x=0;x<shape[y].length;x++)if(shape[y][x]){const nx=p.x+x+dx,ny=p.y+y+dy;if(nx<0||nx>=COLS||ny>=ROWS||(ny>=0&&grid[ny][nx]))return true}return false}
+function merge(){piece.shape.forEach((r,y)=>r.forEach((v,x)=>{if(v&&piece.y+y>=0)grid[piece.y+y][piece.x+x]=piece.type}))}
+function clearLines(){let cleared=0;grid=grid.filter(r=>{if(r.every(Boolean)){cleared++;return false}return true});while(grid.length<ROWS)grid.unshift(Array(COLS).fill(null));if(cleared){const points=[0,100,300,500,800][cleared]||1200;score+=points*level;lines+=cleared;level=Math.floor(lines/10)+1;resetTimer()}}
+function spawn(){piece=newPiece(nextType||randomType());nextType=randomType();if(collides(piece)){gameOver();return}drawNext()}
+function randomType(){return TYPES[Math.floor(Math.random()*TYPES.length)]}
+function drop(){if(!playing||paused)return;if(!collides(piece,0,1)){piece.y++;draw();return}merge();clearLines();spawn();draw()}
+function hardDrop(){if(!playing||paused)return;let d=0;while(!collides(piece,0,1)){piece.y++;d++}score+=d*2;merge();clearLines();spawn();draw()}
+function move(dx){if(playing&&!paused&&!collides(piece,dx,0)){piece.x+=dx;draw()}}
+function turn(){if(!playing||paused)return;const rotated=rotate(piece.shape);for(const dx of [0,-1,1,-2,2])if(!collides(piece,dx,0,rotated)){piece.x+=dx;piece.shape=rotated;draw();return}}
+function resetTimer(){clearInterval(timer);timer=setInterval(drop,Math.max(90,800-(level-1)*65))}
+function start(){grid=empty();score=0;lines=0;level=1;playing=true;paused=false;nextType=randomType();spawn();overlay.classList.add('hidden');update();resetTimer();draw()}
+function gameOver(){playing=false;clearInterval(timer);overlay.innerHTML='<h2>GAME OVER</h2><p>NEW GAME을 눌러 다시 시작</p>';overlay.classList.remove('hidden')}
+function togglePause(){if(!playing)return;paused=!paused;overlay.innerHTML=paused?'<h2>PAUSED</h2><p>P를 눌러 계속</p>':'';overlay.classList.toggle('hidden',!paused)}
+function update(){scoreEl.textContent=score;linesEl.textContent=lines;levelEl.textContent=level}
+function draw(){boardEl.innerHTML='';for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){const c=document.createElement('div');c.className='cell'+(grid[y][x]?' filled '+grid[y][x].toLowerCase():'');boardEl.appendChild(c)}if(piece)for(let y=0;y<piece.shape.length;y++)for(let x=0;x<piece.shape[y].length;x++)if(piece.shape[y][x]){const yy=piece.y+y,xx=piece.x+x;if(yy>=0){const c=boardEl.children[yy*COLS+xx];c.className='cell filled '+piece.type.toLowerCase()}}update()}
+function drawNext(){nextEl.innerHTML='';const s=SHAPES[nextType];for(let y=0;y<4;y++)for(let x=0;x<4;x++){const c=document.createElement('div');c.className='cell';if(s[y]?.[x])c.className+=' filled '+nextType.toLowerCase();nextEl.appendChild(c)}}
+document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowDown','ArrowUp',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft')move(-1);else if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowDown')drop();else if(e.key==='ArrowUp')turn();else if(e.key===' ')hardDrop();else if(e.key.toLowerCase()==='p')togglePause();else if(e.key==='Enter'&&!playing)start()});document.querySelector('#newGame').addEventListener('click',start);drawNext();draw();
