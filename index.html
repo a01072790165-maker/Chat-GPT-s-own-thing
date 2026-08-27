@@ -1,53 +1,21 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TETRIS — ChatGPT Edition</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#080b12"><title>TETRIS — Mobile</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main class="game-wrap">
-  <header>
-    <div>
-      <p class="eyebrow">CHATGPT EDITION</p>
-      <h1>TETRIS</h1>
-    </div>
-    <button id="newGame" class="btn">NEW GAME</button>
-  </header>
-
-  <section class="game">
-    <div class="board-shell">
-      <div id="board" class="board" aria-label="테트리스 게임판"></div>
-      <div id="overlay" class="overlay">
-        <h2>READY?</h2>
-        <p>SPACE를 눌러 시작</p>
-      </div>
-    </div>
-
-    <aside class="panel">
-      <div class="stat"><span>SCORE</span><strong id="score">0</strong></div>
-      <div class="stat"><span>LINES</span><strong id="lines">0</strong></div>
-      <div class="stat"><span>LEVEL</span><strong id="level">1</strong></div>
-
-      <div class="next-box">
-        <span>NEXT</span>
-        <div id="next" class="next"></div>
-      </div>
-
-      <div class="controls">
-        <h3>CONTROLS</h3>
-        <p><kbd>←</kbd><kbd>→</kbd> 이동</p>
-        <p><kbd>↓</kbd> 빠르게 내리기</p>
-        <p><kbd>↑</kbd> 회전</p>
-        <p><kbd>SPACE</kbd> 즉시 낙하</p>
-        <p><kbd>P</kbd> 일시정지</p>
-      </div>
-    </aside>
-  </section>
-
-  <footer>클리어한 줄이 많을수록 레벨이 올라갑니다.</footer>
-</main>
-<script src="script.js"></script>
-</body>
-</html>
+<header><div><p class="eyebrow">CHATGPT EDITION</p><h1>TETRIS</h1></div><button id="newGame" class="btn">NEW GAME</button></header>
+<section class="game">
+<div class="board-shell"><div id="board" class="board" aria-label="테트리스 게임판"></div><div id="overlay" class="overlay"><h2>READY?</h2><p>START를 눌러 시작</p></div></div>
+<aside class="panel">
+<div class="stat"><span>SCORE</span><strong id="score">0</strong></div><div class="stat"><span>LINES</span><strong id="lines">0</strong></div><div class="stat"><span>LEVEL</span><strong id="level">1</strong></div>
+<div class="next-box"><span>NEXT</span><div id="next" class="next"></div></div>
+<div class="controls"><h3>CONTROLS</h3><p>키보드: ← → 이동 · ↑ 회전</p><p>↓ 빠르게 · SPACE 즉시 낙하 · P 일시정지</p></div>
+</aside>
+</section>
+<section class="mobile-controls" aria-label="모바일 조작"><button data-action="left">←</button><button data-action="rotate">↻</button><button data-action="right">→</button><button data-action="down">↓</button><button data-action="drop">DROP</button></section>
+<footer>화면 버튼으로도 플레이할 수 있습니다.</footer>
+</main><script src="script.js"></script>
+</body></html>
