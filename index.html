@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#e9ff00"><meta name="description" content="VOID — 평범한 회사 페이지를 만들지 않는 회사.">
+<title>VOID / NOT A COMPANY PAGE</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="noise"></div>
+<header class="top"><a class="logo" href="#">VOID<span>_</span></a><div class="status"><i></i> OPEN TO THE UNEXPECTED</div><a href="#signal" class="jump">[ CONTACT ]</a></header>
+<main>
+<section class="hero" id="top">
+  <div class="hero-kicker">THIS IS NOT A COMPANY WEBSITE.</div>
+  <h1>우리는<br><em>문제를</em> 만듭니다.</h1>
+  <div class="hero-side"><span>SCROLL TO FIND OUT<br>WHAT THAT MEANS ↓</span><strong>01—07</strong></div>
+  <p class="hero-note">대부분의 회사는 자신들이 무엇을 하는지 설명합니다.<br>우리는 설명하기 전에, <b>당신이 무엇을 보고 있는지</b>부터 의심합니다.</p>
+</section>
+
+<section class="interrupt yellow">
+  <div class="counter">[ INTERRUPTION 01 ]</div><p>잠깐.</p><h2>좋은 회사 페이지라면<br>이쯤에서 <span>서비스를 소개</span>해야겠죠.</h2><button class="fake" data-message="아니요. 계속합니다.">서비스 보기 →</button><div class="stamp">ERROR<br>EXPECTED<br>BEHAVIOUR</div>
+</section>
+
+<section class="manifesto">
+  <div class="section-tag">02 / HOW WE THINK</div>
+  <div class="manifesto-grid"><h2>정답을<br>만드는 대신<br><mark>질문을<br>정교하게.</mark></h2><div class="big-copy"><p>VOID는 브랜드, 제품, 기술을 따로 보지 않습니다. 사람의 행동이 바뀌는 순간을 관찰하고, 그 주변의 시스템을 다시 설계합니다.</p><p>그래서 우리의 결과물은 로고일 수도, 제품일 수도, 조직의 의사결정 방식일 수도 있습니다.</p><span class="mono">INPUT → FRICTION → QUESTION → NEW DEFAULT</span></div></div>
+</section>
+
+<section class="field dark">
+  <div class="section-tag">03 / THE FIELD</div><h2>우리가 하는 일은<br><span id="changingWord">정해져 있지 않습니다.</span></h2>
+  <div class="field-list"><div><b>01</b><strong>Brand Systems</strong><span>정체성을 고정하지 않고 움직이게 합니다.</span></div><div><b>02</b><strong>Product Experiments</strong><span>가설을 화면으로 만들고 실제 반응을 봅니다.</span></div><div><b>03</b><strong>Impossible Things</strong><span>아직 카테고리가 없는 문제를 다룹니다.</span></div></div>
+</section>
+
+<section class="evidence">
+ <div class="section-tag">04 / EVIDENCE</div><h2>말보다<br><span>흔적.</span></h2>
+ <div class="evidence-wall"><article><small>FIELD NOTE 001</small><b>사용자는<br>버튼을 싫어한 게 아니다.</b><p>버튼을 눌러야 하는 이유를 이해하지 못했다.</p></article><article class="tilt"><small>FIELD NOTE 017</small><b>가장 좋은<br>기능을 삭제했다.</b><p>그리고 사용성이 올라갔다.</p></article><article><small>FIELD NOTE 044</small><b>회의를<br>제품에서 제거했다.</b><p>결정은 더 빨라졌다.</p></article></div>
+ <div class="hand">WE DON'T COLLECT CASE STUDIES.<br>WE COLLECT CHANGES.</div>
+</section>
+
+<section class="anti dark">
+ <div class="section-tag">05 / THINGS WE REFUSE</div><h2>우리가<br>하지 않는 것.</h2>
+ <div class="refuse"><div><span>×</span><b>“혁신적인 솔루션”</b><small>뜻 없는 단어로 시작하지 않습니다.</small></div><div><span>×</span><b>“업계 최고의”</b><small>순위를 만들기 위해 존재하지 않습니다.</small></div><div><span>×</span><b>“고객 만족”</b><small>만족보다 변화가 중요합니다.</small></div><div><span>×</span><b>“우리의 비전”</b><small>비전은 벽에 붙이는 문장이 아닙니다.</small></div></div>
+</section>
+
+<section class="signal" id="signal">
+ <div class="section-tag">06 / SIGNAL</div><h2>이상한 문제가<br>있습니까?</h2><p>아직 이름을 붙이지 못한 문제라면 더 좋습니다.</p>
+ <a class="signal-link" href="mailto:hello@void.example">hello@void.example <span>↗</span></a>
+ <div class="terminal"><span>$ void --listen</span><strong id="terminalText">waiting for a strange problem_</strong><button id="ping">SEND SIGNAL</button></div>
+</section>
+
+<section class="end yellow"><div class="end-mark">VOID_</div><h2>평범한 회사가<br>필요했다면,<br>여기까지 오지<br>않았을 겁니다.</h2><div class="end-meta"><span>SEOUL / 2026</span><span>© VOID, ALL RIGHTS UNDEFINED</span><a href="#top">BACK TO TOP ↑</a></div></section>
+</main>
+<script>
+const words=['정해져 있지 않습니다.','항상 바뀝니다.','문제에서 시작합니다.','당신이 결정합니다.'];let wi=0;
+setInterval(()=>{wi=(wi+1)%words.length;document.querySelector('#changingWord').textContent=words[wi]},1800);
+document.querySelectorAll('.fake').forEach(b=>b.addEventListener('click',()=>{b.textContent=b.dataset.message;b.classList.add('clicked')}));
+document.querySelector('#ping').addEventListener('click',()=>{const t=document.querySelector('#terminalText');t.textContent='signal received — we will probably ask more questions_';});
+</script>
+</body></html>
